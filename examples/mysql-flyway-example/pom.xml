@@ -15,8 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>2.0.3</testcontainers.version>
         <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
-        <jooq.version>3.18.3</jooq.version>
-        <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
+        <jooq.version>3.20.10</jooq.version>
+        <mysql-connector-j.version>9.5.0</mysql-connector-j.version>
     </properties>
 
     <dependencies>
@@ -54,7 +54,7 @@
                         <configuration>
                             <database>
                                 <type>MYSQL</type>
-                                <containerImage>mysql:8.0.33</containerImage> <!-- optional -->
+                                <containerImage>mysql:9.6.0</containerImage> <!-- optional -->
                                 <username>test</username> <!-- optional -->
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->

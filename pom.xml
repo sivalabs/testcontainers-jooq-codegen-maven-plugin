@@ -46,30 +46,31 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <spotless-maven-plugin.version>3.2.0</spotless-maven-plugin.version>
-        <maven-plugin-api.version>3.9.0</maven-plugin-api.version>
-        <maven-plugin-annotations.version>3.8.1</maven-plugin-annotations.version>
-        <maven-project.version>2.2.1</maven-project.version>
-        <maven-core.version>3.9.0</maven-core.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-plugin-api.version>3.9.11</maven-plugin-api.version>
+        <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
+        <!--<maven-project.version>2.2.1</maven-project.version>-->
+        <maven-core.version>3.9.11</maven-core.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
         <testcontainers.version>2.0.3</testcontainers.version>
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <liquibase-core.version>4.22.0</liquibase-core.version>
-        <junit-jupiter.version>5.9.3</junit-jupiter.version>
-        <jooq.version>3.18.3</jooq.version>
+        <flyway-core.version>11.14.1</flyway-core.version>
+        <liquibase-core.version>5.0.1</liquibase-core.version>
+        <junit-jupiter.version>6.0.2</junit-jupiter.version>
+        <jooq.version>3.20.10</jooq.version>
         <junit.version>4.13.2</junit.version>
-        <postgresql.version>42.6.0</postgresql.version>
-        <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
-        <mariadb-java-client.version>3.1.2</mariadb-java-client.version>
-        <assertj-core.version>3.24.2</assertj-core.version>
-        <maven-plugin-testing-harness.version>3.3.0</maven-plugin-testing-harness.version>
-        <junit-vintage-engine.version>5.9.3</junit-vintage-engine.version>
-        <lombok.version>1.18.26</lombok.version>
+        <postgresql.version>42.7.9</postgresql.version>
+        <mysql-connector-j.version>9.5.0</mysql-connector-j.version>
+        <mariadb-java-client.version>3.5.7</mariadb-java-client.version>
+        <assertj-core.version>3.27.6</assertj-core.version>
+        <maven-plugin-testing-harness.version>3.5.0</maven-plugin-testing-harness.version>
+        <junit-vintage-engine.version>6.0.2</junit-vintage-engine.version>
+        <lombok.version>1.18.42</lombok.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
@@ -87,17 +88,19 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
             <version>${maven-plugin-api.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
             <version>${maven-core.version}</version>
-            <exclusions>
+            <scope>provided</scope>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -145,6 +148,11 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
             <version>${flyway-core.version}</version>
         </dependency>
         <dependency>
@@ -228,16 +236,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-source-plugin.version}</version>
+                <inherited>true</inherited>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <phase>verify</phase>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludeResources>true</excludeResources>
+                    <useDefaultExcludes>true</useDefaultExcludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -286,41 +298,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>${maven-plugin-plugin.version}</version>
-                <!-- Required for Java 17 -->
+                <!-- Required for Java 19 -->
                 <dependencies>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm</artifactId>
-                        <version>9.4</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.maven.plugin-tools</groupId>
-                        <artifactId>maven-plugin-tools-annotations</artifactId>
-                        <version>${maven-plugin-tools-annotations.version}</version>
+                        <version>9.7.1</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>mojo-descriptor</id>
-                        <goals>
-                            <goal>descriptor</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>help-goal</id>
-                        <goals>
-                            <goal>helpmojo</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <dependenciesToScan>
                         <dependency>org.junit.vintage:junit-vintage-engine</dependency>
@@ -339,6 +329,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>${maven-source-plugin.version}</version>
+                        <inherited>true</inherited>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -347,19 +338,37 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <excludeResources>true</excludeResources>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
+                        <inherited>true</inherited>
                         <executions>
                             <execution>
-                                <id>attach-javadocs</id>
+                                <id>bundle-sources</id>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <maxmemory>1024</maxmemory>
+                            <encoding>UTF-8</encoding>
+                            <show>protected</show>
+                            <notree>true</notree>
+                            <!-- Explicit configuration of javadoc language to avoid defaulting to build system's configuration -->
+                            <locale>en</locale>
+
+                            <!-- Avoid running into Java 8's very restrictive doclint issues -->
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <additionalOptions>-Xdoclint:none</additionalOptions>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.jreleaser</groupId>
