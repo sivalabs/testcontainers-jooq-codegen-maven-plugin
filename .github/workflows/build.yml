@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths-ignore:
       - '.sdkmanrc'
       - 'README.md'
@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   build:
@@ -32,21 +33,12 @@ jobs:
           java-version: ${{ matrix.version }}
           distribution: 'temurin'
           cache: 'maven'
+
       - name: Build with Maven
         run: ./mvnw -ntp verify
 
-
-      - name: Publish SNAPSHOT package
+      - if: ${{ github.ref == 'refs/heads/dev' }}
+        name: Build & Deploy SNAPSHOT
+        run: ./mvnw -ntp deploy -DskipTests
         env:
-          #JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
-          #JRELEASER_MAVENCENTRAL_TOKEN: ${{ secrets.JRELEASER_MAVENCENTRAL_TOKEN }}
-          JRELEASER_NEXUS2_USERNAME: ${{ secrets.JRELEASER_NEXUS2_USERNAME }}
-          JRELEASER_NEXUS2_TOKEN: ${{ secrets.JRELEASER_NEXUS2_TOKEN }}
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
-          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ./mvnw -ntp clean
-          ./mvnw -Prelease 
-          ./mvnw jreleaser:deploy
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
