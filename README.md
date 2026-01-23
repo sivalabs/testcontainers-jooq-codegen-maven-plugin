@@ -3,7 +3,7 @@
 The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation
 by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
 
-[![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
+[![Build](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
 ![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
 
 ## Usage
