@@ -5,13 +5,13 @@
 	https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.testcontainers</groupId>
+    <groupId>dev.sivalabs</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>maven-plugin</packaging>
     <name>testcontainers-jooq-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
-    <url>https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin</url>
+    <url>https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin</url>
     <inceptionYear>2023</inceptionYear>
 
     <licenses>
@@ -36,10 +36,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin.git</connection>
+        <connection>scm:git:https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin.git</connection>
         <developerConnection>scm:git:https://github.com/testcontainers-jooq-codegen-maven-plugin.git
         </developerConnection>
-        <url>https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin</url>
+        <url>https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -57,7 +57,7 @@
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <testcontainers.version>2.0.3</testcontainers.version>
         <flyway-core.version>9.16.3</flyway-core.version>
         <liquibase-core.version>4.22.0</liquibase-core.version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
@@ -73,6 +73,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.20.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
@@ -118,7 +128,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>jdbc</artifactId>
+            <artifactId>testcontainers-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -145,15 +155,15 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>testcontainers-mysql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>testcontainers-mariadb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
