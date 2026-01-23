@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths-ignore:
       - '.sdkmanrc'
       - 'README.md'
@@ -36,7 +36,8 @@ jobs:
         run: ./mvnw -ntp verify
 
 
-      - name: Publish SNAPSHOT package
+      - if: ${{ github.ref == 'refs/heads/dev' }}
+        name: Publish SNAPSHOT package
         env:
           #JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
           #JRELEASER_MAVENCENTRAL_TOKEN: ${{ secrets.JRELEASER_MAVENCENTRAL_TOKEN }}
