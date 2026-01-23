@@ -356,7 +356,7 @@
                                         <applyMavenCentralRules>true</applyMavenCentralRules>
                                         <snapshotSupported>true</snapshotSupported>
                                         <closeRepository>true</closeRepository>
-                                        <releaseRepository>false</releaseRepository>
+                                        <releaseRepository>true</releaseRepository>
                                         <stagingRepositories>target/staging-deploy</stagingRepositories>
                                     </snapshot-deploy>
                                 </nexus2>
