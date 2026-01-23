@@ -70,6 +70,7 @@
         <junit-vintage-engine.version>6.0.2</junit-vintage-engine.version>
         <lombok.version>1.18.42</lombok.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <jreleaser-maven-plugin.version>1.20.0</jreleaser-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -231,29 +232,40 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jreleaser</groupId>
+                    <artifactId>jreleaser-maven-plugin</artifactId>
+                    <version>${jreleaser-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin.version}</version>
-                <inherited>true</inherited>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludeResources>true</excludeResources>
-                    <useDefaultExcludes>true</useDefaultExcludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <useIncrementalCompilation>false</useIncrementalCompilation>
                     <fork>true</fork>
@@ -316,6 +328,44 @@
                     </dependenciesToScan>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jreleaser</groupId>
+                <artifactId>jreleaser-maven-plugin</artifactId>
+                <configuration>
+                    <jreleaser>
+                        <signing>
+                            <active>ALWAYS</active>
+                            <armored>true</armored>
+                        </signing>
+                        <deploy>
+                            <maven>
+                                <mavenCentral>
+                                    <release-deploy>
+                                        <active>RELEASE</active>
+                                        <url>https://central.sonatype.com/api/v1/publisher</url>
+                                        <stagingRepositories>target/staging-deploy</stagingRepositories>
+                                    </release-deploy>
+                                </mavenCentral>
+                                <!--
+                                 Publishing snapshots to the Maven Central Portal requires an additional Nexus2 deployer
+                                 https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_publishing_snapshots
+                                 -->
+                                <nexus2>
+                                    <snapshot-deploy>
+                                        <active>SNAPSHOT</active>
+                                        <snapshotUrl>https://central.sonatype.com/repository/maven-snapshots/</snapshotUrl>
+                                        <applyMavenCentralRules>true</applyMavenCentralRules>
+                                        <snapshotSupported>true</snapshotSupported>
+                                        <closeRepository>true</closeRepository>
+                                        <releaseRepository>true</releaseRepository>
+                                        <stagingRepositories>target/staging-deploy</stagingRepositories>
+                                    </snapshot-deploy>
+                                </nexus2>
+                            </maven>
+                        </deploy>
+                    </jreleaser>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -331,7 +381,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
                         <inherited>true</inherited>
                         <executions>
                             <execution>
@@ -349,7 +398,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
                         <inherited>true</inherited>
                         <executions>
                             <execution>
@@ -367,49 +415,7 @@
                             <notree>true</notree>
                             <!-- Explicit configuration of javadoc language to avoid defaulting to build system's configuration -->
                             <locale>en</locale>
-
-                            <!-- Avoid running into Java 8's very restrictive doclint issues -->
-                            <additionalparam>-Xdoclint:none</additionalparam>
                             <additionalOptions>-Xdoclint:none</additionalOptions>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.jreleaser</groupId>
-                        <artifactId>jreleaser-maven-plugin</artifactId>
-                        <version>1.20.0</version>
-                        <configuration>
-                            <jreleaser>
-                                <signing>
-                                    <active>ALWAYS</active>
-                                    <armored>true</armored>
-                                </signing>
-                                <deploy>
-                                    <maven>
-                                        <mavenCentral>
-                                            <release-deploy>
-                                                <active>RELEASE</active>
-                                                <url>https://central.sonatype.com/api/v1/publisher</url>
-                                                <stagingRepositories>target/staging-deploy</stagingRepositories>
-                                            </release-deploy>
-                                        </mavenCentral>
-                                        <!--
-                                         Publishing snapshots to the Maven Central Portal requires an additional Nexus2 deployer
-                                         https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_publishing_snapshots
-                                         -->
-                                        <nexus2>
-                                            <snapshot-deploy>
-                                                <active>SNAPSHOT</active>
-                                                <snapshotUrl>https://central.sonatype.com/repository/maven-snapshots/</snapshotUrl>
-                                                <applyMavenCentralRules>true</applyMavenCentralRules>
-                                                <snapshotSupported>true</snapshotSupported>
-                                                <closeRepository>true</closeRepository>
-                                                <releaseRepository>true</releaseRepository>
-                                                <stagingRepositories>target/staging-deploy</stagingRepositories>
-                                            </snapshot-deploy>
-                                        </nexus2>
-                                    </maven>
-                                </deploy>
-                            </jreleaser>
                         </configuration>
                     </plugin>
                 </plugins>
