@@ -9,7 +9,7 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 ## Summary
 
 - Plugin migration and code generation might be skipped using `skip` property
-- If you need to reuse existing database connection - take a look at [Jooq section](#Jooq)
+- If you need to reuse the existing database connection - take a look at [Jooq section](#Jooq)
 
 ## Database Configuration
 
@@ -220,15 +220,15 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 [Postgres + Flyway](examples/postgres-flyway-example )   
 [Postgres + Liquibase](examples/postgres-liquibase-example )
 
-### Try with example application
+### Try with an example application
 
 ```shell
 $ cd examples/postgres-flyway-example
 $ mvn clean package
 ```
 
-The JOOQ code should be generated under example/target/generated-sources/jooq folder.
+The JOOQ code should be generated under `target/generated-sources/jooq` folder.
 
 ## CREDITS:
 
-This plugin is heavily based on official https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven.
+This plugin is heavily based on the official https://github.com/jOOQ/jOOQ/tree/main/jOOQ-codegen-maven.
