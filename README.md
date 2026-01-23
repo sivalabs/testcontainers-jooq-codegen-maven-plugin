@@ -3,8 +3,8 @@
 The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation
 by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
 
-[![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
-![Maven Central](https://img.shields.io/maven-central/v/org.testcontainers/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
+[![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
+![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
 
 ## Summary
 
@@ -168,13 +168,13 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 ```xml
 
 <plugin>
-    <groupId>org.testcontainers</groupId>
+    <groupId>dev.sivalabs</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
     <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
     <dependencies>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <version>${testcontainers.version}</version>
         </dependency>
         <dependency>
