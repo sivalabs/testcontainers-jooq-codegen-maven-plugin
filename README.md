@@ -15,7 +15,7 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 ```xml
 <properties>
-    <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
+    <testcontainers-jooq-codegen-maven-plugin.version>0.0.6</testcontainers-jooq-codegen-maven-plugin.version>
     <testcontainers.version>2.0.3</testcontainers.version>
     <jooq.version>3.20.10</jooq.version>
     <postgresql.version>42.7.9</postgresql.version>
