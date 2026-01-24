@@ -6,6 +6,10 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway o
 [![Build](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
 ![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
 
+## Prerequisites
+* JDK 21+
+* Docker
+
 ## Usage
 To use the plugin, add the following configuration to your `pom.xml` file.
 

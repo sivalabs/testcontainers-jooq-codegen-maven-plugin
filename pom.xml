@@ -7,7 +7,7 @@
 
     <groupId>dev.sivalabs</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>0.0.6</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>testcontainers-jooq-codegen-maven-plugin</name>
     <description>jOOQ code generator using Testcontainers</description>
@@ -55,14 +55,17 @@
         <java.version>21</java.version>
         <spotless-maven-plugin.version>3.2.0</spotless-maven-plugin.version>
         <maven-plugin-api.version>3.9.11</maven-plugin-api.version>
-        <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
         <maven-core.version>3.9.11</maven-core.version>
+        <maven-compat.version>3.9.1</maven-compat.version>
+        <maven-plugin-annotations.version>3.15.2</maven-plugin-annotations.version>
+        <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-plugin-plugin.version>3.15.2</maven-plugin-plugin.version>
         <maven-plugin-tools-annotations.version>3.6.1</maven-plugin-tools-annotations.version>
         <testcontainers.version>2.0.3</testcontainers.version>
+        <commons-io.version>2.20.0</commons-io.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
         <flyway-core.version>11.14.1</flyway-core.version>
         <liquibase-core.version>5.0.1</liquibase-core.version>
         <junit-jupiter.version>6.0.2</junit-jupiter.version>
@@ -82,12 +85,12 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.20.0</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.20.0</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -100,20 +103,7 @@
             <artifactId>maven-core</artifactId>
             <version>${maven-core.version}</version>
             <scope>provided</scope>
-            <!--<exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-compat</artifactId>
-            <version>3.9.1</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
@@ -133,34 +123,6 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway-core.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-mysql</artifactId>
-            <version>${flyway-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-database-postgresql</artifactId>
-            <version>${flyway-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase-core.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-postgresql</artifactId>
@@ -193,9 +155,42 @@
         </dependency>
 
         <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.maven.plugin-testing</groupId>
             <artifactId>maven-plugin-testing-harness</artifactId>
             <version>${maven-plugin-testing-harness.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-compat</artifactId>
+            <version>${maven-compat.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -216,7 +211,6 @@
             <version>${junit-vintage-engine.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
