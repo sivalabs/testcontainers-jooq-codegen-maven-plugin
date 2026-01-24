@@ -68,6 +68,23 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 - Plugin migration and code generation might be skipped using `skip` property
 - If you need to reuse the existing database connection - take a look at [Jooq section](#Jooq)
 
+To use SNAPSHOT versions from GitHub Maven Registry:
+
+```xml
+<pluginRepositories>
+    <pluginRepository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+```
+
 ## Database Configuration
 
 To configure a target database, you need to specify at least database `type` property.
