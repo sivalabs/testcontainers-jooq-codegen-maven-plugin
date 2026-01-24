@@ -9,6 +9,8 @@ by using [Testcontainers](https://www.testcontainers.org/) and applying database
 ## Usage
 To use the plugin, add the following configuration to your `pom.xml` file.
 
+Check the latest version [here](https://central.sonatype.com/artifact/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin).
+
 Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 ```xml
@@ -91,13 +93,13 @@ To configure a target database, you need to specify at least database `type` pro
 
 #### Properties
 
-| Parameter      | Required | Default value                                                              | Description                                                    |
-|----------------|----------|----------------------------------------------------------------------------|----------------------------------------------------------------|
-| type           | yes      |                                                                            | Database implementation one of: `POSTGRES`  `MYSQL`  `MARIADB` |
-| containerImage |          | Provided from database type,usually latest version from official container | Image of used container if not default picked                  |
-| username       |          | Provided from database container if not specified                          | Database username for container                                |
-| password       |          | Provided from database container if not specified                          | Database password for container                                |
-| databaseName   |          | Provided from database container if not specified                          | Database name for container                                    |
+| Parameter      | Required | Default value                                     | Description                                   |
+|----------------|----------|---------------------------------------------------|-----------------------------------------------|
+| type           | yes      |                                                   | One of `POSTGRES`, `MYSQL`, `MARIADB`         |
+| containerImage |          | postgres:18-alpine, mysql:9.6.0, mariadb:12       | Image of used container if not default picked |
+| username       |          | Provided from database container if not specified | Database username for container               |
+| password       |          | Provided from database container if not specified | Database password for container               |
+| databaseName   |          | Provided from database container if not specified | Database name for container                   |
 
 #### `database` block configuration
 
@@ -116,24 +118,18 @@ To configure a target database, you need to specify at least database `type` pro
 
 ### Flyway
 
-Flyway works the same way as the original plugin.
-Please find original documentation by link https://flywaydb.org/documentation/usage/maven/
+You can use the [Flyway configuration properties](https://documentation.red-gate.com/fd/flyway-namespace-277578913.html) to customize the defaults.
 
-#### Configuration
-
-- At runtime default configuration files will be autoloaded as it documented - https://flywaydb.org/documentation/configuration/configfile   
-- Currently, the plugin supports all properties existing in Flyway. You can find them by the original link https://flywaydb.org/documentation/configuration/parameters/   
-- Now [config files parameter](https://flywaydb.org/documentation/configuration/parameters/configFiles) is not implemented yet, but you can use the config file at the default location `${baseDir}/flyway.conf`
-
-#### `flyway` block configuration
-
-- Zero configuration with defaults
+**Zero configuration with defaults:**
 
 ```xml
 <flyway/>
 ```
 
-- Adding properties
+The default configuration uses the database connection properties from the Testcontainers datasource 
+and loads the Flyway migrations from `classpath:/db/migration`. The remaining properties will be default Flyway property values.
+
+**Customize Flyway Properties:**
 
 ```xml
 <flyway>
@@ -149,13 +145,7 @@ Please find original documentation by link https://flywaydb.org/documentation/us
 
 ### Liquibase
 
-Liquibase's configuration works the same way as the original maven plugin, with some limitations.
-
-Please find documentation by link https://docs.liquibase.com/tools-integrations/maven/using-liquibase-and-maven-pom-file.html
-
-#### Properties
-
-Now supports only the most useful properties
+Liquibase's following configuration properties are supported:
 
 | Property                       | type   | default                                                                                                                        |
 |--------------------------------|--------|--------------------------------------------------------------------------------------------------------------------------------|
@@ -167,17 +157,18 @@ Now supports only the most useful properties
 | databaseChangeLogTableName     | String |                                                                                                                                |
 | databaseChangeLogLockTableName | String |                                                                                                                                |
 
-Reference to Liquibase properties - https://docs.liquibase.com/concepts/connections/creating-config-properties.html
+Reference to Liquibase documentation - https://docs.liquibase.com/
 
-#### `liquibase` block configuration
-
-- Zero configuration with defaults
+**Zero configuration with defaults:**
 
 ```xml
 <liquibase/>
 ```
 
-- Adding properties
+The default configuration uses the database connection properties from the Testcontainers datasource
+and uses the above-mentioned defaults.
+
+**Customize Liquibase Properties:**
 
 ```xml
 <liquibase>
@@ -189,12 +180,12 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 
 ### JOOQ
 
-#### Properties
+You can configure the following jOOQ properties similar to the official [jooq-codegen-maven](https://www.jooq.org/doc/3.20/manual/code-generation/codegen-execution/codegen-maven/)
 
 - `generator` - property to configure JOOQ code generation settings. See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration properties.  
-- `configurationFiles` / `configurationFile` - are not implemented yet   
 - `jdbc` - If it has all the necessary JDBC parameters (URL, name, password), it will use the existing database, and no container will be spun up.  
 - `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
+- `configurationFiles` / `configurationFile` - are not supported yet   
 
 #### `jooq` block configuration
 
@@ -213,12 +204,37 @@ Reference to Liquibase properties - https://docs.liquibase.com/concepts/connecti
 
 #### Plugin dependencies configuration
 
+Depending on the database you are using, you need to add the database driver dependency to the plugin:
+
 ```xml
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>${postgresql.version}</version>
-</dependency>
+<plugin>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+    <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
+    <dependencies>
+        <!-- if using postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <!-- if using mysql -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
+        </dependency>
+        <!-- if using mariadb -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>${mariadb-java-client.version}</version>
+        </dependency>
+    </dependencies>
+    <executions>
+        ...
+    </executions>
+</plugin>
 ```
 
 ## Examples

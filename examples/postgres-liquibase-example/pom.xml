@@ -7,14 +7,14 @@
 
     <groupId>org.testcontainers.jooqtc</groupId>
     <artifactId>postgres-liquibase-example</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.1</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <testcontainers.version>2.0.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>0.0.6-SNAPSHOT</testcontainers-jooq-codegen-maven-plugin.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
         <jooq.version>3.20.10</jooq.version>
         <postgresql.version>42.7.9</postgresql.version>
     </properties>
@@ -26,18 +26,14 @@
             <version>${jooq.version}</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.testcontainers</groupId>
+                <groupId>dev.sivalabs</groupId>
                 <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
                 <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.testcontainers</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${testcontainers.version}</version>
-                    </dependency>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
