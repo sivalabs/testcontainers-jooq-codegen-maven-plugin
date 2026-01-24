@@ -208,7 +208,7 @@ Depending on the database you are using, you need to add the database driver dep
 
 ```xml
 <plugin>
-    <groupId>org.testcontainers</groupId>
+    <groupId>dev.sivalabs</groupId>
     <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
     <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
     <dependencies>
