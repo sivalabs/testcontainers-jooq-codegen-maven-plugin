@@ -1,7 +1,7 @@
 # testcontainers-jooq-codegen-maven-plugin
 
 The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation
-by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
+by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway or Liquibase database migrations.
 
 [![Build](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
 ![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
@@ -67,10 +67,10 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 </plugin>
 ```
 
-- Plugin migration and code generation might be skipped using `skip` property
+- Plugin migration and code generation could be skipped using `skip` property
 - If you need to reuse the existing database connection - take a look at [Jooq section](#Jooq)
 
-To use SNAPSHOT versions from GitHub Maven Registry:
+To use **SNAPSHOT** versions from **GitHub Maven Registry**:
 
 ```xml
 <pluginRepositories>
@@ -93,13 +93,13 @@ To configure a target database, you need to specify at least database `type` pro
 
 #### Properties
 
-| Parameter      | Required | Default value                                     | Description                                   |
-|----------------|----------|---------------------------------------------------|-----------------------------------------------|
-| type           | yes      |                                                   | One of `POSTGRES`, `MYSQL`, `MARIADB`         |
-| containerImage |          | postgres:18-alpine, mysql:9.6.0, mariadb:12       | Image of used container if not default picked |
-| username       |          | Provided from database container if not specified | Database username for container               |
-| password       |          | Provided from database container if not specified | Database password for container               |
-| databaseName   |          | Provided from database container if not specified | Database name for container                   |
+| Parameter      | Required | Default value                                     | Description                           |
+|----------------|----------|---------------------------------------------------|---------------------------------------|
+| type           | yes      |                                                   | One of `POSTGRES`, `MYSQL`, `MARIADB` |
+| containerImage |          | `postgres:18-alpine`, `mysql:9.6.0`, `mariadb:12` | Overrides the default docker image    |
+| username       |          | Provided from database container if not specified | Database username for container       |
+| password       |          | Provided from database container if not specified | Database password for container       |
+| databaseName   |          | Provided from database container if not specified | Database name for container           |
 
 #### `database` block configuration
 
@@ -182,8 +182,8 @@ and uses the above-mentioned defaults.
 
 You can configure the following jOOQ properties similar to the official [jooq-codegen-maven](https://www.jooq.org/doc/3.20/manual/code-generation/codegen-execution/codegen-maven/)
 
-- `generator` - property to configure JOOQ code generation settings. See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration properties.  
-- `jdbc` - If it has all the necessary JDBC parameters (URL, name, password), it will use the existing database, and no container will be spun up.  
+- `generator` - jOOQ code generation settings. See https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration for all the supporting configuration properties.  
+- `jdbc` - If it has all the necessary JDBC parameters (`url`, `username`, `password`), it will use the existing database, and no container will be spun up.  
 - `baseDir` - directory relative to which generated sources will be generated , `{project.basedir}` - default
 - `configurationFiles` / `configurationFile` - are not supported yet   
 
