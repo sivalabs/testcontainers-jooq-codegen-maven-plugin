@@ -3,6 +3,7 @@ package dev.sivalabs.jooq.codegen.migration.runner;
 import dev.sivalabs.jooq.codegen.datasource.TargetDatasource;
 import java.net.URLClassLoader;
 import java.sql.Driver;
+import java.util.Objects;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
@@ -73,15 +74,15 @@ public final class RunnerProperties {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RunnerProperties that = (RunnerProperties) o;
-        return java.util.Objects.equals(log, that.log)
-                && java.util.Objects.equals(mavenProject, that.mavenProject)
-                && java.util.Objects.equals(mavenClassloader, that.mavenClassloader)
-                && java.util.Objects.equals(targetDatasource, that.targetDatasource);
+        return Objects.equals(log, that.log)
+                && Objects.equals(mavenProject, that.mavenProject)
+                && Objects.equals(mavenClassloader, that.mavenClassloader)
+                && Objects.equals(targetDatasource, that.targetDatasource);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(log, mavenProject, mavenClassloader, targetDatasource);
+        return Objects.hash(log, mavenProject, mavenClassloader, targetDatasource);
     }
 
     @Override

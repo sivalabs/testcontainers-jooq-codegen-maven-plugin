@@ -4,7 +4,11 @@ The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generati
 by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway or Liquibase database migrations.
 
 [![Build](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
-![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)](https://central.sonatype.com/artifact/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin)
+
+## Prerequisites
+* JDK 21+
+* Docker
 
 ## Usage
 To use the plugin, add the following configuration to your `pom.xml` file.
@@ -15,7 +19,7 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 ```xml
 <properties>
-    <testcontainers-jooq-codegen-maven-plugin.version>0.0.6</testcontainers-jooq-codegen-maven-plugin.version>
+    <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
     <testcontainers.version>2.0.3</testcontainers.version>
     <jooq.version>3.20.10</jooq.version>
     <postgresql.version>42.7.9</postgresql.version>
@@ -222,13 +226,13 @@ Depending on the database you are using, you need to add the database driver dep
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>${mysql-connector-j.version}</version>
+            <version>${mysql.version}</version>
         </dependency>
         <!-- if using mariadb -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>${mariadb-java-client.version}</version>
+            <version>${mariadb.version}</version>
         </dependency>
     </dependencies>
     <executions>
