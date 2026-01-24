@@ -4,7 +4,7 @@ The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generati
 by using [Testcontainers](https://www.testcontainers.org/) and applying Flyway or Liquibase database migrations.
 
 [![Build](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/sivalabs/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
-![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin?label=latest-version)](https://central.sonatype.com/artifact/dev.sivalabs/testcontainers-jooq-codegen-maven-plugin)
 
 ## Prerequisites
 * JDK 21+
@@ -226,13 +226,13 @@ Depending on the database you are using, you need to add the database driver dep
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>${mysql-connector-j.version}</version>
+            <version>${mysql.version}</version>
         </dependency>
         <!-- if using mariadb -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>${mariadb-java-client.version}</version>
+            <version>${mariadb.version}</version>
         </dependency>
     </dependencies>
     <executions>
