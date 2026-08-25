@@ -3,7 +3,7 @@ package dev.sivalabs.jooq.codegen.database;
 /** Database Types supported by the plugin */
 public enum DatabaseType {
     POSTGRES("postgres:18-alpine"),
-    MYSQL("mysql:9.6.0"),
+    MYSQL("mysql:9"),
     MARIADB("mariadb:12");
 
     private final String defaultImage;

@@ -2,19 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-	https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>dev.sivalabs</groupId>
-    <artifactId>tc-jooq-codegen-examples</artifactId>
-    <version>0.0.1</version>
+    <artifactId>examples</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>tc-jooq-codegen-examples</name>
+    <name>examples</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
 
     <modules>
-        <module>postgres-flyway-example</module>
-        <module>mysql-flyway-example</module>
         <module>mariadb-flyway-example</module>
+        <module>mysql-flyway-example</module>
+        <module>postgres-flyway-example</module>
         <module>postgres-liquibase-example</module>
     </modules>
 </project>

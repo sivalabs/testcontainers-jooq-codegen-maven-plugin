@@ -7,16 +7,16 @@
 
     <groupId>org.testcontainers.jooqtc</groupId>
     <artifactId>mysql-flyway-example</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <testcontainers.version>2.0.3</testcontainers.version>
-        <testcontainers-jooq-codegen-maven-plugin.version>1.0.0</testcontainers-jooq-codegen-maven-plugin.version>
-        <jooq.version>3.20.10</jooq.version>
-        <mysql.version>9.5.0</mysql.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <testcontainers-jooq-codegen-maven-plugin.version>0.0.5</testcontainers-jooq-codegen-maven-plugin.version>
+        <jooq.version>3.21.7</jooq.version>
+        <mysql-connector-j.version>26.7.0</mysql-connector-j.version>
     </properties>
 
     <dependencies>
@@ -26,7 +26,6 @@
             <version>${jooq.version}</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -35,9 +34,14 @@
                 <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
                 <dependencies>
                     <dependency>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>testcontainers-mysql</artifactId>
+                        <version>${testcontainers.version}</version>
+                    </dependency>
+                    <dependency>
                         <groupId>com.mysql</groupId>
                         <artifactId>mysql-connector-j</artifactId>
-                        <version>${mysql.version}</version>
+                        <version>${mysql-connector-j.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -50,7 +54,7 @@
                         <configuration>
                             <database>
                                 <type>MYSQL</type>
-                                <containerImage>mysql:9.6.0</containerImage> <!-- optional -->
+                                <containerImage>mysql:9</containerImage> <!-- optional -->
                                 <username>test</username> <!-- optional -->
                                 <password>test</password> <!-- optional -->
                                 <databaseName>test</databaseName> <!-- optional -->
